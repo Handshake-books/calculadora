@@ -770,9 +770,9 @@ function collectProjectData(){
 
   const project = {
     titulo: document.querySelector("header input")?.value || "",
-    tirada: document.getElementById("tirada_total")?.value || "",
-    pvp: document.getElementById("pvp")?.value || "",
-    iva: document.getElementById("iva_pct")?.value || "",
+    tirada: parseFloat(document.getElementById("tirada_total")?.value) || 0,
+pvp: parseFloat(document.getElementById("pvp")?.value) || 0,
+iva: parseFloat(document.getElementById("iva_pct")?.value) || 0
     costes: [],
     stock: [],
     inversion: [],
@@ -846,7 +846,7 @@ function loadProjectFromURL(){
 
     const project = JSON.parse(decodeURIComponent(escape(atob(data))))
 
-    if(project.costes){
+if(project.costes){
   document.getElementById("costList").innerHTML=""
   project.costes.forEach(c=>addRow("costList",c.concepto,c.valor,"€"))
 }
@@ -865,11 +865,22 @@ if(project.ingresos){
   document.getElementById("incomeList").innerHTML=""
   project.ingresos.forEach(i=>addRow("incomeList",i.actor,i.porcentaje,"%"))
 }
+
+if(project.tirada !== undefined)
+document.getElementById("tirada_total").value = project.tirada
+
+if(project.pvp !== undefined)
+document.getElementById("pvp").value = project.pvp
+
+if(project.iva !== undefined)
+document.getElementById("iva_pct").value = project.iva
+Por qué
+     
   }catch(e){
     console.warn("No se pudo cargar el proyecto desde la URL")
   }
 
-  if(typeof calc === "function") calc()
+  setTimeout(calc,50)
 }
 
 loadProjectFromURL();
