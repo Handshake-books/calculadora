@@ -1,10 +1,53 @@
 
+<!-- =========================================================
+CALCULADORA PROYECTO EDITORIAL – V29 COMENTADA
+-------------------------------------------------------------
+Este archivo contiene toda la herramienta en una sola página.
+
+SECCIONES PRINCIPALES DEL HTML:
+
+1. HEADER
+   - Título de la herramienta
+   - Campo para el título del libro
+
+2. COLUMNA 1 – DATOS SOBRE EL LIBRO
+   - Costes de producción
+   - Tirada
+   - Stock fuera de venta
+   - Precio del libro
+   - Precios sugeridos
+
+3. COLUMNA 2 – NEGOCIACIÓN
+   - Acuerdos de inversión
+   - Reparto de ingresos
+   - Resultados por actor
+
+4. COLUMNA 3 – RESULTADOS
+   - Viabilidad
+   - Coste unitario
+   - Beneficio por libro
+   - Punto de equilibrio
+
+5. BOTONES
+   - Exportar PDF
+   - Compartir proyecto (genera enlace con datos)
+
+NOTA:
+Puedes modificar textos, placeholders y estilos sin afectar
+a los cálculos mientras no cambies los IDs de los inputs.
+
+Los cálculos se hacen en el bloque <script> al final.
+========================================================= -->
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Calculadora proyecto editorial</title>
+
 <link rel="icon" href="icon.png">
+
 <style>
 :root{
 --bg:#f4f6f8;
@@ -198,7 +241,7 @@ justify-content:center;
 }
 
 @media print{
-@page { size:A3 landscape; margin:10mm }
+@page { size:A3 landscape; margin:5mm }
 button{display:none}
 body{background:white}
 .section{box-shadow:none;border:1px solid var(--border)}
@@ -208,39 +251,6 @@ body{background:white}
 font-size:16px;
 font-weight:600;
 color:#444;
-}
-
-
-@media print{
-  @page { size: A3 landscape; margin: 10mm; }
-
-  body{
-    background: white !important;
-    zoom: 1;
-  }
-
-  /* keep the 3-column desktop layout */
-  .layout{
-    display: grid !important;
-    grid-template-columns: 1fr 1fr 1fr !important;
-    gap: 20px !important;
-  }
-
-  .container{
-    max-width: none !important;
-  }
-
-  /* remove UI-only elements */
-  button{
-    display:none !important;
-  }
-
-  /* cleaner cards in print */
-  .section{
-    box-shadow:none !important;
-    border:1px solid #ddd !important;
-    break-inside: avoid;
-  }
 }
 
 </style>
@@ -266,7 +276,8 @@ color:#444;
 <div class="section">
 <h3>Costes de producción</h3>
 <div class="helper">
-Intenta tener en cuenta el máximo posible de conceptos involucrados en la producción del proyecto, traducciones, acabados extra, packaging...
+Intenta tener en cuenta el máximo posible de conceptos: impresión, traducciones, acabados extra, packaging...
+<br><br>
 </div>
 
 <div id="costList"></div>
@@ -291,7 +302,8 @@ Intenta tener en cuenta el máximo posible de conceptos involucrados en la produ
 <h4>Stock fuera de venta</h4>
 
 <div class="helper">
-Estas son copias que quedan fuera del stock a la venta (archivos personales, muestras para ferias, copias para prensa...).
+Estas son copias que quedan fuera del stock a la venta: archivos personales, muestras para ferias, libros con tara...
+<br><br>
 </div>
 
 <div id="stockList"></div>
@@ -322,7 +334,7 @@ Estas son copias que quedan fuera del stock a la venta (archivos personales, mue
 
 <div class="divider"></div>
 
-<h4>Precios sugeridos en base al coste</h4>
+<h4>Precios sugeridos</h4>
 
 <div class="suggest-grid">
 <div>
@@ -352,7 +364,7 @@ Estas son copias que quedan fuera del stock a la venta (archivos personales, mue
 
 <div class="section">
 <h3>Acuerdos de inversión</h3>
-<div class="helper">¿Qué porcentaje de la inversión está dispuesto a asumir cada actor?</div>
+<div class="helper">¿Qué porcentaje de la inversión está dispuesto a asumir cada actor?<br><br></div>
 
 <div id="investList"></div>
 <div id="invWarning" class="warning">Los porcentajes de inversión deben sumar 100%</div>
@@ -362,7 +374,7 @@ Estas son copias que quedan fuera del stock a la venta (archivos personales, mue
 
 <div class="section">
 <h3>Reparto de ingresos</h3>
-<div class="helper">¿Cómo se repartirán los ingresos por la venta de los libros?</div>
+<div class="helper">¿Cómo se repartirán los ingresos por la venta de los libros?<br><br></div>
 
 <div id="incomeList"></div>
 <div id="incWarning" class="warning">Los porcentajes de ingresos deben sumar 100%</div>
@@ -413,9 +425,7 @@ Estas son copias que quedan fuera del stock a la venta (archivos personales, mue
 
 <div class="section">
 <h3>Resultados económicos</h3>
-<div class="helper">
-Estas estimaciones no tienen en cuenta descuentos a librerías, distribución o comisiones de tiendas online.
-</div>
+
 <div class="results-grid">
 <div>
 <div class="metric-label">Ingresos estimados (PVP)</div>
@@ -438,13 +448,26 @@ Estas estimaciones no tienen en cuenta descuentos a librerías, distribución o 
 </div>
 </div>
 
-
+<div class="helper">
+Estas estimaciones no tienen en cuenta descuentos a librerías, distribución o comisiones de tiendas online.
+</div>
 </div>
 
 <div class="footer">
-<button onclick="window.print()">Exportar PDF</button>
+
+<div class="actions">
+
+<button onclick="window.print()">
+⬇︎ Exportar PDF
+</button>
+
+<button onclick="shareProject()">
+🔗 Compartir proyecto
+</button>
+
 </div>
 
+</div>
 </div>
 
 </div>
@@ -456,9 +479,27 @@ Estas estimaciones no tienen en cuenta descuentos a librerías, distribución o 
 const euro=new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',minimumFractionDigits:2})
 const number=new Intl.NumberFormat('es-ES')
 
+
+// ------------------------------------------------------
+// FUNCIÓN: formatEuro
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
 function formatEuro(v){return euro.format(v)}
+
+// ------------------------------------------------------
+// FUNCIÓN: formatUnits
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
 function formatUnits(v){return number.format(v)+" uds."}
 
+
+// ------------------------------------------------------
+// FUNCIÓN: addRow
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
 function addRow(container,label,value,unit){
 
 let row=document.createElement("div")
@@ -477,11 +518,41 @@ document.getElementById(container).appendChild(row)
 attach()
 }
 
+
+// ------------------------------------------------------
+// FUNCIÓN: addCost
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
 function addCost(){addRow("costList","Nuevo concepto",0,"€")}
+
+// ------------------------------------------------------
+// FUNCIÓN: addStock
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
 function addStock(){addRow("stockList","Concepto",0,"uds.")}
+
+// ------------------------------------------------------
+// FUNCIÓN: addInvestor
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
 function addInvestor(){addRow("investList","Actor",0,"%")}
+
+// ------------------------------------------------------
+// FUNCIÓN: addIncome
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
 function addIncome(){addRow("incomeList","Actor",0,"%")}
 
+
+// ------------------------------------------------------
+// FUNCIÓN: sum
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
 function sum(container){
 let t=0
 document.querySelectorAll("#"+container+" input[type=number]").forEach(e=>{
@@ -490,6 +561,12 @@ t+=parseFloat(e.value)||0
 return t
 }
 
+
+// ------------------------------------------------------
+// FUNCIÓN: checkPercentages
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
 function checkPercentages(){
 
 let inv=sum("investList")
@@ -499,6 +576,12 @@ document.getElementById("invWarning").style.display = inv===100 ? "none":"block"
 document.getElementById("incWarning").style.display = inc===100 ? "none":"block"
 }
 
+
+// ------------------------------------------------------
+// FUNCIÓN: calc
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
 function calc(){
 
 let inversion=sum("costList")
@@ -552,6 +635,12 @@ updateActorCharts(inversion, ingresos_sin_iva)
 
 }
 
+
+// ------------------------------------------------------
+// FUNCIÓN: updateActorCharts
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
 function updateActorCharts(inversion, ingresos){
 
 let actors=[]
@@ -605,6 +694,12 @@ html+=`
 document.getElementById("actorCharts").innerHTML=html
 }
 
+
+// ------------------------------------------------------
+// FUNCIÓN: attach
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
 function attach(){
 document.querySelectorAll(".calc").forEach(e=>{
 e.removeEventListener("input",calc)
@@ -612,10 +707,10 @@ e.addEventListener("input",calc)
 })
 }
 
-addRow("costList","Impresión",3000,"€")
+addRow("costList","Ej. Impresión",3000,"€")
 
-addRow("stockList","Archivo editorial",10,"uds.")
-addRow("stockList","Archivo Autor/a",10,"uds.")
+addRow("stockList","Ej. Archivo editorial",10,"uds.")
+addRow("stockList","Ej. Archivo Autor/a",10,"uds.")
 
 addRow("investList","Editorial",80,"%")
 addRow("investList","Autor/a",20,"%")
@@ -625,6 +720,97 @@ addRow("incomeList","Autor/a",20,"%")
 
 attach()
 calc()
+
+
+
+// ==============================
+// Compartir proyecto por URL
+// ==============================
+
+
+// ------------------------------------------------------
+// FUNCIÓN: collectProjectData
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
+
+// ======================================================
+// SISTEMA DE COMPARTIR PROYECTOS
+// ------------------------------------------------------
+// Este bloque permite generar enlaces con los datos del
+// proyecto codificados en la URL.
+//
+// Ventajas:
+// - No usa servidor
+// - No guarda datos de usuarios
+// - Funciona en GitHub Pages
+//
+// Cuando alguien abre un enlace con ?data=...
+// la calculadora reconstruye el proyecto automáticamente.
+// ======================================================
+
+function collectProjectData(){
+
+  const project = {
+    titulo: document.querySelector("header input")?.value || "",
+    tirada: document.getElementById("tirada_total")?.value || "",
+    pvp: document.getElementById("pvp")?.value || "",
+    iva: document.getElementById("iva_pct")?.value || ""
+  };
+
+  return project;
+}
+
+
+// ------------------------------------------------------
+// FUNCIÓN: shareProject
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
+function shareProject(){
+
+  const project = collectProjectData();
+
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(project))))
+
+  const url = window.location.origin + window.location.pathname + "?data=" + encoded
+
+  navigator.clipboard.writeText(url)
+
+  alert("Enlace del proyecto copiado al portapapeles")
+}
+
+
+// ------------------------------------------------------
+// FUNCIÓN: loadProjectFromURL
+// Esta función forma parte de la lógica principal
+// Si la modificas revisa que no afecte a otras llamadas.
+// ------------------------------------------------------
+function loadProjectFromURL(){
+
+  const params = new URLSearchParams(window.location.search)
+  const data = params.get("data")
+
+  if(!data) return
+
+  try{
+
+    const project = JSON.parse(decodeURIComponent(escape(atob(data))))
+
+    if(project.titulo) document.querySelector("header input").value = project.titulo
+    if(project.tirada) document.getElementById("tirada_total").value = project.tirada
+    if(project.pvp) document.getElementById("pvp").value = project.pvp
+    if(project.iva) document.getElementById("iva_pct").value = project.iva
+
+  }catch(e){
+    console.warn("No se pudo cargar el proyecto desde la URL")
+  }
+
+  if(typeof calc === "function") calc()
+}
+
+loadProjectFromURL();
+
 
 </script>
 
