@@ -316,7 +316,7 @@ Estas son copias que quedan fuera del stock a la venta: archivos personales, mue
 </div>
 
 <div class="section">
-<h3>Precio del libro</h3>
+<h3>Precio de venta</h3>
 
 <div class="input-unit">
 <input id="pvp" class="calc" type="number" value="25">
@@ -829,11 +829,25 @@ function loadProjectFromURL(){
 
     const project = JSON.parse(decodeURIComponent(escape(atob(data))))
 
-    if(project.titulo) document.querySelector("header input").value = project.titulo
-    if(project.tirada) document.getElementById("tirada_total").value = project.tirada
-    if(project.pvp) document.getElementById("pvp").value = project.pvp
-    if(project.iva) document.getElementById("iva_pct").value = project.iva
+    if(project.costes){
+  document.getElementById("costList").innerHTML=""
+  project.costes.forEach(c=>addRow("costList",c.concepto,c.valor,"€"))
+}
 
+if(project.stock){
+  document.getElementById("stockList").innerHTML=""
+  project.stock.forEach(s=>addRow("stockList",s.concepto,s.valor,"uds."))
+}
+
+if(project.inversion){
+  document.getElementById("investList").innerHTML=""
+  project.inversion.forEach(i=>addRow("investList",i.actor,i.porcentaje,"%"))
+}
+
+if(project.ingresos){
+  document.getElementById("incomeList").innerHTML=""
+  project.ingresos.forEach(i=>addRow("incomeList",i.actor,i.porcentaje,"%"))
+}
   }catch(e){
     console.warn("No se pudo cargar el proyecto desde la URL")
   }
