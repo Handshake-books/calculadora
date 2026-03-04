@@ -755,10 +755,42 @@ function collectProjectData(){
     titulo: document.querySelector("header input")?.value || "",
     tirada: document.getElementById("tirada_total")?.value || "",
     pvp: document.getElementById("pvp")?.value || "",
-    iva: document.getElementById("iva_pct")?.value || ""
+    iva: document.getElementById("iva_pct")?.value || "",
+    costes: [],
+    stock: [],
+    inversion: [],
+    ingresos: []
   };
 
-  return project;
+  document.querySelectorAll("#costList .input-row").forEach(row=>{
+    project.costes.push({
+      concepto: row.children[0].value,
+      valor: row.children[1].querySelector("input").value
+    })
+  })
+
+  document.querySelectorAll("#stockList .input-row").forEach(row=>{
+    project.stock.push({
+      concepto: row.children[0].value,
+      valor: row.children[1].querySelector("input").value
+    })
+  })
+
+  document.querySelectorAll("#investList .input-row").forEach(row=>{
+    project.inversion.push({
+      actor: row.children[0].value,
+      porcentaje: row.children[1].querySelector("input").value
+    })
+  })
+
+  document.querySelectorAll("#incomeList .input-row").forEach(row=>{
+    project.ingresos.push({
+      actor: row.children[0].value,
+      porcentaje: row.children[1].querySelector("input").value
+    })
+  })
+
+  return project
 }
 
 
