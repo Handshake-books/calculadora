@@ -241,10 +241,27 @@ justify-content:center;
 }
 
 @media print{
-@page { size:A3 landscape; margin:5mm }
+
+@page { size:A4 landscape; margin:10mm }
+
+body{
+background:white;
+zoom:0.75;
+}
+
+.layout{
+display:grid !important;
+grid-template-columns:1fr 1fr 1fr !important;
+gap:24px;
+}
+
 button{display:none}
-body{background:white}
-.section{box-shadow:none;border:1px solid var(--border)}
+
+.section{
+box-shadow:none;
+border:1px solid var(--border)
+}
+
 }
 
 .suggest-grid .metric-value{
