@@ -629,7 +629,7 @@ document.getElementById("coste_unitario").innerText=formatEuro(coste_unit)
 let beneficio=base-coste_unit
 document.getElementById("beneficio").innerText=formatEuro(beneficio)
 
-let equilibrio=Math.ceil(inversion/beneficio)
+let equilibrio = beneficio>0 ? Math.ceil(inversion/beneficio) : 0
 document.getElementById("equilibrio").innerText=equilibrio+" uds. de "+venta+" uds."
 
 let ratio=equilibrio/venta
@@ -698,13 +698,14 @@ html+=`
 <div class="actor-name">${a.name}</div>
 
 <div class="bar bar-invest" style="width:${inv_pct}%"></div>
-<div class="bar-label">Inversión: ${formatEuro(a.inv_val)}</div>
+<div class="bar-label">Inversión: ${formatEuro(Number(a.inv_val))}</div>
+
 
 <div class="bar bar-income" style="width:${inc_pct}%"></div>
-<div class="bar-label">Ingresos: ${formatEuro(a.inc_val)}</div>
+<div class="bar-label">Ingresos: ${formatEuro(Number(a.inc_val))}</div>
 
 <div class="bar bar-profit" style="width:${prof_pct}%"></div>
-<div class="bar-label">Beneficio: ${formatEuro(a.profit)}</div>
+<div class="bar-label">Beneficio: ${formatEuro(Number(a.profit))}</div>
 
 </div>
 `
