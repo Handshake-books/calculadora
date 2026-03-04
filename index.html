@@ -772,7 +772,7 @@ function collectProjectData(){
     titulo: document.querySelector("header input")?.value || "",
     tirada: parseFloat(document.getElementById("tirada_total")?.value) || 0,
 pvp: parseFloat(document.getElementById("pvp")?.value) || 0,
-iva: parseFloat(document.getElementById("iva_pct")?.value) || 0
+iva: parseFloat(document.getElementById("iva_pct")?.value) || 0,
     costes: [],
     stock: [],
     inversion: [],
@@ -817,6 +817,8 @@ iva: parseFloat(document.getElementById("iva_pct")?.value) || 0
 // Si la modificas revisa que no afecte a otras llamadas.
 // ------------------------------------------------------
 function shareProject(){
+
+  calc()
 
   const project = collectProjectData();
 
@@ -874,7 +876,7 @@ document.getElementById("pvp").value = project.pvp
 
 if(project.iva !== undefined)
 document.getElementById("iva_pct").value = project.iva
-Por qué
+
      
   }catch(e){
     console.warn("No se pudo cargar el proyecto desde la URL")
