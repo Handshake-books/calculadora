@@ -165,12 +165,12 @@ Sugerencias de precios basadas en multiplicar el coste unitario.<br>
 
 <div class="section">
 <h3>Acuerdos de inversión</h3>
-<div class="helper">¿Qué porcentaje de la inversión está dispuesto a asumir cada actor?<br><br></div>
+<div class="helper">¿Qué porcentaje de la inversión está dispuesto a asumir cada uno? Aquí pueden entrar la editorial, el autor/a, ayudas públicas, becas privadas...<br><br></div>
 
 <div id="investList"></div>
 <div id="invWarning" class="warning">Los porcentajes de inversión deben sumar 100%</div>
 
-<button class="add" onclick="addInvestor()">+ añadir actor</button>
+<button class="add" onclick="addInvestor()">+ añadir ítem</button>
 </div>
 
 <div class="section">
@@ -180,11 +180,11 @@ Sugerencias de precios basadas en multiplicar el coste unitario.<br>
 <div id="incomeList"></div>
 <div id="incWarning" class="warning">Los porcentajes de ingresos deben sumar 100%</div>
 
-<button class="add" onclick="addIncome()">+ añadir actor</button>
+<button class="add" onclick="addIncome()">+ añadir ítem</button>
 </div>
 
 <div class="section">
-<h3>Resultados por actor</h3>
+<h3>Inversión vs. Beneficio</h3>
 <div id="actorCharts"></div>
 </div>
 
@@ -199,17 +199,17 @@ Sugerencias de precios basadas en multiplicar el coste unitario.<br>
 <h3>Viabilidad</h3>
 
 <div class="metric">
-<div class="metric-label">PVP</div>
+<div class="metric-label">Precio de venta al público</div>
 <div id="pvp_viabilidad" class="metric-value"></div>
 </div>
 
 <div class="metric">
-<div class="metric-label">Coste / ud.</div>
+<div class="metric-label">Coste unitario (Coste total / Tirada a la venta).</div>
 <div id="coste_unitario" class="metric-value"></div>
 </div>
 
 <div class="metric">
-<div class="metric-label">Beneficio por libro (sin IVA)</div>
+<div class="metric-label">Beneficio por libro (PVP sin IVA - Coste ud.)</div>
 <div id="beneficio"></div>
 </div>
 
@@ -234,14 +234,15 @@ Sugerencias de precios basadas en multiplicar el coste unitario.<br>
 </div>
 
 <div>
+<div class="metric-label">Ingresos sin IVA</div>
+<div id="ingresos_sin_iva"></div>
+</div>
+
+<div>
 <div class="metric-label">IVA acumulado</div>
 <div id="iva_total"></div>
 </div>
 
-<div>
-<div class="metric-label">Ingresos sin IVA</div>
-<div id="ingresos_sin_iva"></div>
-</div>
 
 <div class="result-highlight">
 <div class="metric-label">Beneficio estimado del proyecto (sin IVA)</div>
