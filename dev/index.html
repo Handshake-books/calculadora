@@ -784,6 +784,16 @@ e.addEventListener("input",calc)
 })
 }
 
+const discountSlider = document.getElementById("discountSlider")
+const discountValue = document.getElementById("discountValue")
+
+if(discountSlider){
+discountSlider.addEventListener("input",()=>{
+discountValue.textContent = discountSlider.value
+calc()
+})
+}
+
 addRow("costList","Ej. Impresión",3000,"€")
 
 addRow("stockList","Ej. Archivo editorial",10,"uds.")
