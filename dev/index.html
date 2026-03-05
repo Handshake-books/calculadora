@@ -683,8 +683,11 @@ document.getElementById("tirada_venta").innerText=formatUnits(venta)
 let coste_unit=inversion/tirada
 document.getElementById("coste_unitario").innerText=formatEuro(coste_unit)
 
-let beneficio=base-coste_unit
-document.getElementById("beneficio").innerText=formatEuro(beneficio)
+let discount = discountSlider ? discountSlider.value/100 : 0
+let precio_editorial = base * (1-discount)
+
+let beneficio = precio_editorial - coste_unit
+   document.getElementById("beneficio").innerText=formatEuro(beneficio)
 
 let equilibrio = beneficio>0 ? Math.ceil(inversion/beneficio) : 0
 document.getElementById("equilibrio").innerText=equilibrio+" uds. de "+venta+" uds."
