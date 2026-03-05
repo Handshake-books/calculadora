@@ -21,6 +21,24 @@ padding:28px;
 color:var(--text);
 }
 
+.handshake-credit{
+position:fixed;
+top:10px;
+right:16px;
+font-size:10px;
+color:#9aa0a6;
+opacity:0.8;
+}
+
+.handshake-credit a{
+color:#9aa0a6;
+text-decoration:none;
+}
+
+.handshake-credit a:hover{
+text-decoration:underline;
+}
+
 .container{max-width:1400px;margin:auto}
 
 header{margin-bottom:28px}
