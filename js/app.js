@@ -128,7 +128,7 @@ let venta=tirada-stock
 
 document.getElementById("tirada_venta").innerText=formatUnits(venta)
 
-let coste_unit=inversion/tirada
+let coste_unit = venta > 0 ? inversion / venta : 0
 document.getElementById("coste_unitario").innerText=formatEuro(coste_unit)
 
 let beneficio=base-coste_unit
