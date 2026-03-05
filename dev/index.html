@@ -62,6 +62,23 @@ Los cálculos se hacen en el bloque <script> al final.
 --warning:#fff3cd;
 }
 
+.discount-control{
+margin-top:10px;
+}
+
+.discount-control label{
+font-size:12px;
+color:var(--muted);
+display:block;
+margin-bottom:4px;
+}
+
+.discount-value{
+font-size:12px;
+color:var(--text);
+margin-top:2px;
+}
+   
 .handshake-credit{
 position:fixed;
 top:6px;
@@ -459,6 +476,18 @@ Sugerencias de precios basadas en multiplicar el coste unitario.<br>
 <div id="beneficio"></div>
 </div>
 
+
+<div class="discount-control">
+<label>Descuento comercial</label>
+
+<input type="range" id="discountSlider" min="0" max="70" value="0" step="1">
+
+<div class="discount-value">
+<span id="discountValue">0</span> %
+</div>
+</div>
+   
+   
 <div class="metric">
 <div class="metric-label">Ventas necesarias para recuperar inversión</div>
 <div id="equilibrio"></div>
