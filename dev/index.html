@@ -78,14 +78,49 @@ font-size:12px;
 color:var(--text);
 margin-top:2px;
 }
+
+.discount-control input[type=range]{
+width:100%;
+appearance:none;
+height:6px;
+border-radius:6px;
+background:var(--border);
+outline:none;
+}
+
+.discount-control input[type=range]::-webkit-slider-thumb{
+appearance:none;
+width:16px;
+height:16px;
+border-radius:50%;
+background:var(--blue);
+cursor:pointer;
+border:none;
+margin-top:-5px;
+}
+
+.discount-control input[type=range]::-moz-range-thumb{
+width:16px;
+height:16px;
+border-radius:50%;
+background:var(--blue);
+border:none;
+cursor:pointer;
+}
+
+.discount-value{
+margin-top:6px;
+font-size:13px;
+color:var(--muted);
+}
    
 .handshake-credit{
 position:fixed;
 top:6px;
 right:12px;
-font-size:9px;
+font-size:12px;
 color:#9aa0a6;
-opacity:0.7;
+opacity:0.8;
 z-index:999;
 }
 
@@ -97,7 +132,6 @@ text-decoration:none;
 .handshake-credit a:hover{
 text-decoration:underline;
 }
-
 
    
 body{
@@ -314,8 +348,8 @@ color:#444;
 <body>
 
 <div class="handshake-credit">
-An open editorial tool by 
-<a href="https://www.handshake.fun" target="_blank">Handshake</a>
+An open editorial tool developed by 
+<a href="https://www.handshake.fun" target="_blank">Handshake</a> • 2026
 </div>
    
 <div style="background:#ffd166;padding:6px;text-align:center;font-size:12px;">
@@ -699,8 +733,13 @@ document.getElementById("p3").innerText=formatEuro(coste_unit*3)
 document.getElementById("p4").innerText=formatEuro(coste_unit*4)
 document.getElementById("p5").innerText=formatEuro(coste_unit*5)
 
-let ingresos=pvp*venta
-let ingresos_sin_iva=base*venta
+let discount = discountSlider ? discountSlider.value/100 : 0
+let precio_editorial = base * (1-discount)
+
+let ingresos = pvp * venta
+let ingresos_sin_iva = precio_editorial * venta
+let iva_total = iva * venta
+let beneficio_sin_iva = ingresos_sin_iva - inversion
 let iva_total=iva*venta
 let beneficio_sin_iva=ingresos_sin_iva-inversion
 
