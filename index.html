@@ -144,7 +144,47 @@
                     </div>
                 </section>
 
-                <section class="card">
+               
+                <section class="card simulator-section">
+                    <h3>Simulador de ventas</h3>
+                    <div class="helper">Desliza el marcador para visualizar cómo cambia la rentabilidad del proyecto según el volumen ventas.</div>
+                    
+                    <div class="range-container">
+                        <div class="range-track" id="range_track_bg">
+                            <div id="break_fill" class="range-fill"></div>
+                            <div id="eq_mark" class="range-mark"><span class="mark-label">PUNTO DE EQUILIBRIO</span></div>
+                        </div>
+                        <input type="range" id="ventasSlider" class="range-input" min="0" max="100" value="100">
+                    </div>
+                    <div class="slider-legend"><span>0 ventas</span><span>Sold out</span></div>
+
+                    <div class="results-grid">
+                        <div class="res-item blue-box">
+                            <span class="label">Ventas simuladas</span>
+                            <b id="ventas_sim_val">0 uds.</b>
+                        </div>
+                        <div class="res-item">
+                            <span class="label">Total Bruto</span>
+                            <b id="ingresos_total">0,00 €</b>
+                        </div>
+                        <div class="res-item">
+                            <span class="label">IVA Acumulado</span>
+                            <b id="iva_total">0,00 €</b>
+                        </div>
+                        <div class="res-item">
+                            <span class="label">Base Neta</span>
+                            <b id="ingresos_sin_iva">0,00 €</b>
+                        </div>
+                        <div class="res-total">
+                            <span class="label">Resultado Final del Proyecto</span>
+                            <span id="beneficio_sin_iva" class="val-final">0,00 €</span>
+                            <div class="helper-mini" style="margin-top:8px">¡Cuidado! Estas estimaciones no tienen en cuenta descuentos a librerías, distribuidoras o comisiones de tiendas online. Para un cálculo más detallado activa la pestaña "Canales de venta"
+</div>
+                        </div>
+                    </div>
+                </section>
+
+                 <section class="card">
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
                         <div>
                             <h3 style="margin:0;">Canales de Venta</h3>
@@ -180,44 +220,6 @@
                         </div>
                         <div id="channelList"></div>
                         <button class="add-btn" onclick="addChannel()">+ añadir canal con dto.</button>
-                    </div>
-                </section>
-                <section class="card simulator-section">
-                    <h3>Simulador de ventas</h3>
-                    <div class="helper">Desliza el marcador para visualizar cómo cambia la rentabilidad del proyecto según el volumen ventas.</div>
-                    
-                    <div class="range-container">
-                        <div class="range-track" id="range_track_bg">
-                            <div id="break_fill" class="range-fill"></div>
-                            <div id="eq_mark" class="range-mark"><span class="mark-label">PUNTO DE EQUILIBRIO</span></div>
-                        </div>
-                        <input type="range" id="ventasSlider" class="range-input" min="0" max="100" value="100">
-                    </div>
-                    <div class="slider-legend"><span>0 ventas</span><span>Sold out</span></div>
-
-                    <div class="results-grid">
-                        <div class="res-item blue-box">
-                            <span class="label">Ventas simuladas</span>
-                            <b id="ventas_sim_val">0 uds.</b>
-                        </div>
-                        <div class="res-item">
-                            <span class="label">Total Bruto</span>
-                            <b id="ingresos_total">0,00 €</b>
-                        </div>
-                        <div class="res-item">
-                            <span class="label">IVA Acumulado</span>
-                            <b id="iva_total">0,00 €</b>
-                        </div>
-                        <div class="res-item">
-                            <span class="label">Base Neta</span>
-                            <b id="ingresos_sin_iva">0,00 €</b>
-                        </div>
-                        <div class="res-total">
-                            <span class="label">Resultado Final del Proyecto</span>
-                            <span id="beneficio_sin_iva" class="val-final">0,00 €</span>
-                            <div class="helper-mini" style="margin-top:8px">¡Cuidado! Estas estimaciones no tienen en cuenta descuentos a librerías, distribuidoras o comisiones de tiendas online. 
-</div>
-                        </div>
                     </div>
                 </section>
 
