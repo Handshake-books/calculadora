@@ -94,7 +94,7 @@
                 <div class="column-title">2. Negociación</div>
                 <section class="card">
                     <h3>Inversión</h3>
-                    <div class="helper">Quién aporta el dinero inicial. Aquí pueden entrar: otra editorial, el autor/a, ayudas públicas, becas...(la suma debe ser 100%).</div>
+                    <div class="helper">¿Quién aporta el dinero inicial? Aquí pueden participar: otra editorial, el autor/a, ayudas públicas, becas privadas...</div>
                     <div id="investList"></div>
                     <button class="add-btn" onclick="addInvestor()">+ añadir inversor</button>
                     <div id="invWarning" class="warning">⚠️ La inversión debe sumar 100%</div>
@@ -102,7 +102,7 @@
 
                 <section class="card">
                     <h3>Reparto de ingresos</h3>
-                    <div class="helper">Cómo se reparte el dinero por las ventas conseguidas (suma 100%).</div>
+                    <div class="helper">Cómo se reparte el dinero por las ventas conseguidas.</div>
                     <div id="incomeList"></div>
                     <button class="add-btn" onclick="addIncome()">+ añadir beneficiario</button>
                     <div id="incWarning" class="warning">⚠️ El reparto debe sumar 100%</div>
@@ -174,7 +174,7 @@
                         </div>
 
                         <div style="display: grid; grid-template-columns: 1fr 60px 70px 25px; gap: 8px; margin-bottom: 8px; padding: 0 5px; font-size: 9px; font-weight: 800; color: var(--muted); text-transform: uppercase;">
-                            <span>Canal</span><span>% Dto.</span><span>Ventas</span><span></span>
+                            <span>Canal de venta</span><span>% Dto.</span><span>Ventas (uds.)</span><span></span>
                         </div>
                         <div id="channelList"></div>
                         <button class="add-btn" onclick="addChannel()">+ añadir canal con dto.</button>
