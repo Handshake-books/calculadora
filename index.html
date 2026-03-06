@@ -2,8 +2,10 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Calculadora Editorial</title>
+    <title>Calculadora Editorial • Handshake</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="icon.png">
+
 </head>
 <body>
     <div class="handshake-credit">
@@ -13,7 +15,7 @@
     <div class="container">
         <header class="minimal-header">
             <input id="titulo_proyecto" class="title-input" placeholder="Nombre del proyecto editorial...">
-            <div class="subtitle">Simulador de viabilidad económica y negociación</div>
+            <div class="subtitle">Simulador editorial de viabilidad económica.</div>
         </header>
 
         <div class="layout">
@@ -22,7 +24,7 @@
                 
                 <section class="card">
                     <h3>Costes de producción</h3>
-                    <div class="helper">Suma los gastos de fabricación <b>sin IVA</b>.</div>
+                    <div class="helper">Ten en cuenta todos los conceptos involucrados en la producción: impresión, traducciones, acabados extra, packaging...</div>
                     <div id="costList"></div>
                     <button class="add-btn" onclick="addCost()">+ añadir concepto</button>
                     <div class="divider"></div>
@@ -33,15 +35,19 @@
                 </section>
 
                 <section class="card">
-                    <h3>Tirada y Stock</h3>
+                    <h3>Stock</h3>
                     <div class="helper">Define cuántos libros se imprimen y cuántos no se venden.</div>
                     <div class="input-group">
                         <input id="tirada_total" class="calc" type="number" value="600">
                         <span class="unit">uds. totales</span>
                     </div>
-                    <div class="helper-box"><b>Stock fuera de venta:</b> Ejemplares para prensa, autor o archivo (0€ ingresos).</div>
-                    <div id="stockList"></div>
-                    <button class="add-btn" onclick="addStock()">+ añadir stock fuera de venta</button>
+                    
+                    <div class="stock-deduction-box">
+                        <div class="helper"><b>Stock fuera de venta:</b> Ejemplares para archivo, muestras para ferias, libros con tara... (estos ejemplares generan coste pero no ingresos).</div>
+                        <div id="stockList"></div>
+                        <button class="add-btn" onclick="addStock()">+ añadir stock fuera de venta</button>
+                    </div>
+
                     <div class="divider"></div>
                     <div class="metric-row-inline">
                         <span class="label">Stock real a la venta</span>
@@ -51,21 +57,37 @@
 
                 <section class="card">
                     <h3>Modelo de Precio</h3>
-                    <div class="helper">Fija el PVP para calcular el neto descontando impuestos.</div>
-                    <div class="input-group main-price">
+                    <div class="helper">Fija el precio a la venta.</div>
+                    <div class="input-group">
                         <input id="pvp" class="calc" type="number" value="25">
                         <span class="unit">€ PVP</span>
                     </div>
+                    
                     <div class="price-grid">
-                        <div class="price-sub-item"><span class="label">Base (Neto)</span><b id="base_calc">0,00 €</b></div>
-                        <div class="price-sub-item"><span class="label">IVA %</span><input id="iva_pct" class="calc tiny-input" type="number" value="4"></div>
-                        <div class="price-sub-item"><span class="label">Cuota IVA</span><b id="iva_calc">0,00 €</b></div>
+                        <div class="price-sub-item">
+                            <span class="label">Base (Neto)</span>
+                            <b id="base_calc">0,00 €</b>
+                        </div>
+                        <div class="price-sub-item">
+                            <span class="label">IVA</span>
+                            <div class="input-wrapper mini">
+                                <input id="iva_pct" class="calc" type="number" value="4">
+                                <span class="inline-unit">%</span>
+                            </div>
+                        </div>
+                        <div class="price-sub-item">
+                            <span class="label">Cuota IVA</span>
+                            <b id="iva_calc">0,00 €</b>
+                        </div>
                     </div>
                     <div class="divider"></div>
+                    
+                    <h4 class="mini-section-title">PVP sugeridos</h4>
+                    <div class="helper">Multiplicadores basados en el coste de fabricación por unidad para asegurar márgenes saludables.</div>
                     <div class="suggestions-container">
-                        <div class="suggest-item"><span>Sugerido ×3</span><b id="p3">0,00 €</b></div>
-                        <div class="suggest-item"><span>Sugerido ×4</span><b id="p4">0,00 €</b></div>
-                        <div class="suggest-item"><span>Sugerido ×5</span><b id="p5">0,00 €</b></div>
+                        <div class="suggest-item"><span>×3</span><b id="p3">0,00 €</b></div>
+                        <div class="suggest-item"><span>×4</span><b id="p4">0,00 €</b></div>
+                        <div class="suggest-item"><span>×5</span><b id="p5">0,00 €</b></div>
                     </div>
                 </section>
             </div>
@@ -74,7 +96,7 @@
                 <div class="column-title">2. Negociación</div>
                 <section class="card">
                     <h3>Inversión</h3>
-                    <div class="helper">Quién aporta el dinero inicial (la suma debe ser 100%).</div>
+                    <div class="helper">Quién aporta el dinero inicial. Aquí pueden entrar otra editorial, el autor/a, ayudas públicas, becas...(la suma debe ser 100%).</div>
                     <div id="investList"></div>
                     <button class="add-btn" onclick="addInvestor()">+ añadir inversor</button>
                     <div id="invWarning" class="warning">⚠️ La inversión debe sumar 100%</div>
@@ -82,14 +104,14 @@
 
                 <section class="card">
                     <h3>Reparto de ingresos</h3>
-                    <div class="helper">Cómo se reparte el dinero neto por cada venta (suma 100%).</div>
+                    <div class="helper">Cómo se reparte el dinero por cada venta (suma 100%).</div>
                     <div id="incomeList"></div>
                     <button class="add-btn" onclick="addIncome()">+ añadir beneficiario</button>
                     <div id="incWarning" class="warning">⚠️ El reparto debe sumar 100%</div>
                 </section>
 
                 <div class="section-plain">
-                    <h3 class="small-title">Balance por Actores</h3>
+                    <h3 class="small-title">Balance por Participantes</h3>
                     <div id="actorCharts"></div>
                 </div>
             </div>
@@ -100,32 +122,40 @@
                 <section class="card-nested-container">
                     <div class="nested-grid">
                         <div class="nested-card">
-                            <span class="label">Coste / ud.</span>
-                            <span id="coste_unitario" class="val">0,00 €</span>
+                            <span class="label">PVP Final</span>
+                            <span id="resumen_pvp" class="val">0,00 €</span>
+                            <div class="helper-mini">Precio de venta al público (IVA inc).</div>
                         </div>
                         <div class="nested-card">
-                            <span class="label">Margen / ud.</span>
-                            <span id="beneficio" class="val">0,00 €</span>
+                            <span class="label">Coste / ud.</span>
+                            <span id="coste_unitario" class="val">0,00 €</span>
+                            <div class="helper-mini">= Inversión inicial / Stock a la venta.</div>
                         </div>
-                    </div>
-                    <div class="nested-card full">
-                        <span class="label">Punto de equilibrio (Break-even)</span>
-                        <span id="equilibrio" class="val-blue">0 uds.</span>
+                        <div class="nested-card">
+                            <span class="label">Beneficio / ud.</span>
+                            <span id="beneficio" class="val">0,00 €</span>
+                            <div class="helper-mini">Margen neto con cada venta.</div>
+                        </div>
+                        <div class="nested-card">
+                            <span class="label">Punto de equilibrio</span>
+                            <span id="equilibrio" class="val-blue">0 uds.</span>
+                            <div class="helper-mini">Ventas necesarias para cubrir la inversión.</div>
+                        </div>
                     </div>
                 </section>
 
                 <section class="card simulator-section">
                     <h3>Simulador de ventas</h3>
-                    <div class="helper">Mueve el deslizador para ver escenarios de ganancia o pérdida.</div>
+                    <div class="helper">Desliza el marcador para visualizar cómo cambia la rentabilidad del proyecto según el volumen de ejemplares vendidos.</div>
                     
-                    <div class="slider-legend"><span>0</span><span>VENTA TOTAL</span></div>
                     <div class="range-container">
-                        <div class="range-track">
+                        <div class="range-track" id="range_track_bg">
                             <div id="break_fill" class="range-fill"></div>
                             <div id="eq_mark" class="range-mark"><span class="mark-label">PUNTO DE EQUILIBRIO</span></div>
                         </div>
                         <input type="range" id="ventasSlider" class="range-input" min="0" max="100" value="100">
                     </div>
+                    <div class="slider-legend"><span>0 ventas</span><span>Sold out</span></div>
 
                     <div class="results-grid">
                         <div class="res-item blue-box">
@@ -147,13 +177,15 @@
                         <div class="res-total">
                             <span class="label">Resultado Final del Proyecto</span>
                             <span id="beneficio_sin_iva" class="val-final">0,00 €</span>
+                            <div class="helper-mini" style="margin-top:8px">¡Cuidado! Estas estimaciones no tienen en cuenta descuentos a librerías, distribuidoras o comisiones de tiendas online. 
+</div>
                         </div>
                     </div>
                 </section>
 
                 <div class="action-footer">
-                    <button class="btn btn-dark" onclick="shareProject()">🔗 Enlace</button>
-                    <button class="btn btn-dark" onclick="window.print()">📄 PDF</button>
+                    <button class="btn btn-dark" onclick="shareProject()">🔗 Copiar Enlace</button>
+                    <button class="btn btn-dark" onclick="window.print()">📄 descargar PDF</button>
                     <button class="btn btn-reset" onclick="resetCalc()">🔄 Reset</button>
                 </div>
             </div>
