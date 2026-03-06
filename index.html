@@ -5,7 +5,6 @@
     <title>Calculadora Editorial • Handshake</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="icon.png">
-
 </head>
 <body>
     <div class="handshake-credit">
@@ -14,7 +13,7 @@
 
     <div class="container">
         <header class="minimal-header">
-            <input id="titulo_proyecto" class="title-input" placeholder="Nombre del proyecto...">
+            <input id="titulo_proyecto" class="title-input" placeholder="Nombre del proyecto editorial...">
             <div class="subtitle">Simulador editorial de viabilidad económica.</div>
         </header>
 
@@ -82,8 +81,8 @@
                     </div>
                     <div class="divider"></div>
                     
-                    <h4 class="mini-section-title">Precios sugeridos</h4>
                     <div class="helper">Multiplicadores basados en el coste de fabricación por unidad para asegurar márgenes saludables.</div>
+                    <h4 class="mini-section-title">Precios sugeridos</h4>
                     <div class="suggestions-container">
                         <div class="suggest-item"><span>×3</span><b id="p3">0,00 €</b></div>
                         <div class="suggest-item"><span>×4</span><b id="p4">0,00 €</b></div>
@@ -144,10 +143,48 @@
                     </div>
                 </section>
 
-               
+                <section class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                        <div>
+                            <h3 style="margin:0;">¿Venderás en librerías o tiendas?</h3>
+                            <div class="helper-mini" style="margin-top:4px;">Activa esta opción si tienes canales con comisión o distribución.</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="label" style="font-size: 9px;">SÍ</span>
+                            <label class="switch">
+                                <input type="checkbox" id="modoPro" onchange="togglePro()">
+                                <span class="slider-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="proContent" style="display: none; border-top: 1px solid var(--border); margin-top: 10px; padding-top: 15px;">
+                        <div class="helper">Reparte tu stock en distintos canales de venta, ajusta el descuento de cada canal y consigue una proyección más realista.</div>
+                        
+                        <div class="distribution-bar" id="distBar"></div>
+                        <div class="slider-legend" style="margin-top: 8px; margin-bottom: 20px; display: flex; justify-content: space-between;">
+                            <span id="label_principal" style="color: var(--blue); font-size: 10px; font-weight: 800;">● Directa</span>
+                            <span id="label_otros" style="color: var(--muted); font-size: 10px; font-weight: 800;">● Con comisión</span>
+                        </div>
+
+                        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 15px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span class="label" style="margin:0">Ventas Directas (Sin dto.)</span>
+                                <span id="unidades_principal" style="font-weight: 800; color: var(--blue);">0 uds.</span>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 60px 70px 25px; gap: 8px; margin-bottom: 8px; padding: 0 5px; font-size: 9px; font-weight: 800; color: var(--muted); text-transform: uppercase;">
+                            <span>Canal</span><span>% Dto.</span><span>Ventas</span><span></span>
+                        </div>
+                        <div id="channelList"></div>
+                        <button class="add-btn" onclick="addChannel()">+ añadir canal con dto.</button>
+                    </div>
+                </section>
+
                 <section class="card simulator-section">
                     <h3>Simulador de ventas</h3>
-                    <div class="helper">Desliza el marcador para visualizar cómo cambia la rentabilidad del proyecto según el volumen ventas.</div>
+                    <div class="helper">Desliza el marcador para visualizar cómo cambia la rentabilidad del proyecto según el volumen de ventas.</div>
                     
                     <div class="range-container">
                         <div class="range-track" id="range_track_bg">
@@ -178,48 +215,8 @@
                         <div class="res-total">
                             <span class="label">Resultado Final del Proyecto</span>
                             <span id="beneficio_sin_iva" class="val-final">0,00 €</span>
-                            <div class="helper-mini" style="margin-top:8px">¡Cuidado! Estas estimaciones no tienen en cuenta descuentos a librerías, distribuidoras o comisiones de tiendas online. Para un cálculo más detallado activa la pestaña "Canales de venta"
-</div>
+                            <div class="helper-mini" style="margin-top:8px">¡Cuidado! Estas estimaciones no tienen en cuenta descuentos a librerías, distribuidoras o comisiones de tiendas online.</div>
                         </div>
-                    </div>
-                </section>
-
-                 <section class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
-                        <div>
-                            <h3 style="margin:0;">Canales de Venta</h3>
-                            <div class="helper-mini" style="margin-top:4px;">¿Tus ventas son 100% directas (sin comisiones)?</div>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span class="label" style="font-size: 9px;">NO</span>
-                            <label class="switch">
-                                <input type="checkbox" id="modoPro" onchange="togglePro()">
-                                <span class="slider-switch"></span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div id="proContent" style="display: none; border-top: 1px solid var(--border); margin-top: 10px; padding-top: 15px;">
-                        <div class="helper">Reparte tu stock en distintos canales de venta, ajusta el descuento de cada canal y consigue una proyección mas realista. </div>
-                        
-                        <div class="distribution-bar" id="distBar"></div>
-                        <div class="slider-legend" style="margin-top: 8px; margin-bottom: 20px; display: flex; justify-content: space-between;">
-                            <span id="label_principal" style="color: var(--blue); font-size: 10px; font-weight: 800;">● Directa</span>
-                            <span id="label_otros" style="color: var(--muted); font-size: 10px; font-weight: 800;">● Con comisión</span>
-                        </div>
-
-                        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 15px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span class="label" style="margin:0">Ventas Directas (Sin dto.)</span>
-                                <span id="unidades_principal" style="font-weight: 800; color: var(--blue);">0 uds.</span>
-                            </div>
-                        </div>
-
-                        <div style="display: grid; grid-template-columns: 1fr 60px 70px 25px; gap: 8px; margin-bottom: 8px; padding: 0 5px; font-size: 9px; font-weight: 800; color: var(--muted); text-transform: uppercase;">
-                            <span>Canal</span><span>% Dto.</span><span>Ventas</span><span></span>
-                        </div>
-                        <div id="channelList"></div>
-                        <button class="add-btn" onclick="addChannel()">+ añadir canal con dto.</button>
                     </div>
                 </section>
 
@@ -232,8 +229,6 @@
         </div>
     </div>
     <script src="js/app.js"></script>
-    <script data-goatcounter="https://jaimesebas92.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-
+    <script data-goatcounter="https://jaimesebas92.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
