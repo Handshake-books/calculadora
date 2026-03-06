@@ -23,7 +23,7 @@
                 
                 <section class="card">
                     <h3>Costes de producción</h3>
-                    <div class="helper">Ten en cuenta todos los conceptos involucrados en la producción: impresión, traducciones, acabados extra, packaging...</div>
+                    <div class="helper">Incluye aquí todo lo que hace que tu libro sea real: desde el papel y la impresión hasta el packaging de los envíos o la corrección de textos.</div>
                     <div id="costList"></div>
                     <button class="add-btn" onclick="addCost()">+ añadir concepto</button>
                     <div class="divider"></div>
@@ -42,7 +42,7 @@
                     </div>
                     
                     <div class="stock-deduction-box">
-                        <div class="helper"><b>Stock fuera de venta:</b> Ejemplares para archivo, muestras para ferias, libros con tara...</div>
+                        <div class="helper"><b>Stock fuera de venta:</b> No todos los libros se venden. Reserva ejemplares para usar de muestra, depósito legal o para tu propia estantería.</div>
                         <div id="stockList"></div>
                         <button class="add-btn" onclick="addStock()">+ añadir stock fuera de venta</button>
                     </div>
@@ -80,8 +80,8 @@
                     </div>
                     <div class="divider"></div>
                     
-                    <div class="helper">Multiplicadores basados en el coste de fabricación por unidad para asegurar márgenes saludables.</div>
-                    <h4 class="mini-section-title">Precios sugeridos</h4>
+                    <h4 class="mini-section-title">¿Qué precio le pongo?</h4>
+                    <div class="helper">Estas son referencias habituales del mercado, se multiplica el coste unitario para asegurar márgenes saludables. Elige la que mejor encaje con tu lector.</div>
                     <div class="suggestions-container">
                         <div class="suggest-item"><span>×3</span><b id="p3">0,00 €</b></div>
                         <div class="suggest-item"><span>×4</span><b id="p4">0,00 €</b></div>
@@ -94,7 +94,7 @@
                 <div class="column-title">2. Negociación</div>
                 <section class="card">
                     <h3>Inversión</h3>
-                    <div class="helper">¿Quién aporta el dinero inicial? Aquí pueden participar: otra editorial, el autor/a, ayudas públicas, becas privadas...</div>
+                    <div class="helper">¿Quién pone el dinero? Puede ser la editorial, un co-editor, una beca o incluso un crowdfunding.</div>
                     <div id="investList"></div>
                     <button class="add-btn" onclick="addInvestor()">+ añadir inversor</button>
                     <div id="invWarning" class="warning">⚠️ La inversión debe sumar 100%</div>
@@ -102,14 +102,14 @@
 
                 <section class="card">
                     <h3>Reparto de ingresos</h3>
-                    <div class="helper">Cómo se reparte el dinero por las ventas conseguidas.</div>
+                    <div class="helper">Define cómo se reparte el pastel de las ventas netas. ¿Qué porcentaje se lleva el autor/a tras recuperar la inversión?</div>
                     <div id="incomeList"></div>
                     <button class="add-btn" onclick="addIncome()">+ añadir beneficiario</button>
                     <div id="incWarning" class="warning">⚠️ El reparto debe sumar 100%</div>
                 </section>
 
                 <div class="section-plain">
-                    <h3 class="small-title">Balance por Participantes</h3>
+                    <h3 class="small-title">Reparto de beneficios</h3>
                     <div id="actorCharts"></div>
                 </div>
             </div>
@@ -120,24 +120,24 @@
                 <section class="card-nested-container">
                     <div class="nested-grid">
                         <div class="nested-card">
-                            <span class="label">PVP</span>
-                            <span id="resumen_pvp" class="val">0,00 €</span>
+                            <span class="label">P.V.P.</span>
+                            <span id="resumen_pvp" class="val-blue">0,00 €</span>
                             <div class="helper-mini">Precio de venta al público (IVA inc).</div>
                         </div>
                         <div class="nested-card">
                             <span class="label">Coste / ud.</span>
-                            <span id="coste_unitario" class="val">0,00 €</span>
+                            <span id="coste_unitario" class="val-blue">0,00 €</span>
                             <div class="helper-mini">= Inversión inicial / Stock a la venta.</div>
                         </div>
                         <div class="nested-card">
-                            <span class="label">Ingreso neto / ud.</span>
-                            <span id="beneficio" class="val">0,00 €</span>
-                            <div class="helper-mini">Ingreso por venta tras restar el IVA, el coste y las comisiones de venta.</div>
+                            <span class="label">Margen medio / ud.</span>
+                            <span id="beneficio" class="val-blue">0,00 €</span>
+                            <div class="helper-mini">Beneficio por ejemplar vendido. Varía según el coste/ud. y el descuento que apliques a cada canal.</div>
                         </div>
                         <div class="nested-card">
                             <span class="label">Punto de equilibrio</span>
                             <span id="equilibrio" class="val-blue">0 uds.</span>
-                            <div class="helper-mini">Ventas necesarias para cubrir la inversión.</div>
+                            <div class="helper-mini">Esta es tu 'cifra mágica'. A partir de aquí, el proyecto deja de ser una inversión y empieza a generar beneficios.</div>
                         </div>
                     </div>
                 </section>
@@ -145,8 +145,8 @@
                 <section class="card">
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
                         <div>
-                            <h3 style="margin:0;">¿Venderás en librerías o tiendas?</h3>
-                            <div class="helper-mini" style="margin-top:4px;">Activa esta opción si tienes canales de venta con comisión.</div>
+                            <h3 style="margin:0;">¿Vas a vender a través de terceros?</h3>
+                            <div class="helper-mini" style="margin-top:4px;">Si vas a vender a través de otros canales, activa esta opción para ver cómo afectan las comisiones a tu beneficio real.</div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span class="label" style="font-size: 9px;">SÍ</span>
@@ -183,7 +183,7 @@
 
                 <section class="card simulator-section">
                     <h3>Simulador de ventas</h3>
-                    <div class="helper">Desliza el marcador para visualizar cómo cambia la rentabilidad del proyecto según el volumen de ventas.</div>
+                    <div class="helper">Juega con el marcador negro: ¿qué pasa si solo vendes la mitad? ¿Y si agotas la edición?</div>
                     
                     <div class="range-container">
                         <div class="range-track" id="range_track_bg">
@@ -212,16 +212,18 @@
                             <b id="ingresos_sin_iva">0,00 €</b>
                         </div>
                         <div class="res-total">
-                            <span class="label">Resultado Final del Proyecto</span>
+                            <span class="label">Resultado Final</span>
                             <span id="beneficio_sin_iva" class="val-final">0,00 €</span>
+                              <div class="helper">Esta es la proyección de beneficios. Tómalo como una guía, ¡la realidad editorial siempre tiene sus giros de guion!</div>
+
                         </div>
                     </div>
                 </section>
 
                 <div class="action-footer">
-                    <button class="btn btn-dark" onclick="shareProject()">🔗 Copiar Enlace</button>
-                    <button class="btn btn-dark" onclick="exportPDF()">📄 descargar PDF</button>
-                    <button class="btn btn-reset" onclick="resetCalc()">🔄 Reset</button>
+                    <button class="btn btn-dark" onclick="shareProject()">🔗 Guardar y Compartir</button>
+                    <button class="btn btn-dark" onclick="exportPDF()">📄 Generar informe de viabilidad</button>
+                    <button class="btn btn-reset" onclick="resetCalc()">🔄 Empezar de cero</button>
                 </div>
             </div>
         </div>
