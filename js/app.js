@@ -58,9 +58,8 @@ function togglePro() {
         document.querySelectorAll("#stockList input[type=number]").forEach(i => stockFuera += parseFloat(i.value) || 0);
         let vMax = Math.max(0, tirada - stockFuera);
         
-        addChannel("Wholesale", 40, Math.round(vMax * 0.30));
-        addChannel("Web", 4, Math.round(vMax * 0.15));
-        addChannel("Distri", 60, Math.round(vMax * 0.10));
+        addChannel("Wholesales", 40, Math.round(vMax * 0.30));
+        addChannel("Distribuidora", 60, Math.round(vMax * 0.10));
         addChannel("Librerías", 35, Math.round(vMax * 0.10));
     }
     calc();
