@@ -61,11 +61,10 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color
 .a-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; color: var(--muted); }
 .a-total { border-top: 1px solid #f1f5f9; margin-top: 10px; padding-top: 10px; font-weight: 800; font-size: 14px; display: flex; justify-content: space-between; }
 
-/* Simulador - Ajustes de padding solicitados */
 .simulator-section { margin-bottom: 15px; }
-.slider-legend { display: flex; justify-content: space-between; font-size: 10px; font-weight: 800; color: var(--muted); margin-top: 18px; } /* Reducido padding inferior */
-.range-container { position: relative; height: 12px; background: #fee2e2; border-radius: 6px; margin: 40px 0 10px 0; overflow: visible; } /* Aumentado padding superior */
-.range-track { width: 100%; height: 100%; position: relative; border-radius: 6px; background: linear-gradient(to right, #fee2e2 0%, #d1fae5 100%); }
+.slider-legend { display: flex; justify-content: space-between; font-size: 10px; font-weight: 800; color: var(--muted); margin-top: 18px; } 
+.range-container { position: relative; height: 12px; border-radius: 6px; margin: 40px 0 10px 0; overflow: visible; } 
+.range-track { width: 100%; height: 100%; position: relative; border-radius: 6px; } 
 .range-fill { height: 100%; border-radius: 6px; transition: 0.1s; position: absolute; z-index: 1; }
 .range-mark { position: absolute; width: 2px; height: 30px; background: #000; top: -9px; z-index: 5; }
 .mark-label { position: absolute; top: -20px; left: -50px; width: 100px; text-align: center; font-size: 8px; font-weight: 900; background: #fff; padding: 2px; border: 1px solid #000; border-radius: 4px;}
@@ -86,3 +85,34 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color
 .divider { border-top: 1px solid var(--border); margin: 15px 0; }
 .warning { color: #9a3412; background: #fff7ed; padding: 8px; border-radius: 6px; font-size: 10px; font-weight: 800; margin-top: 10px; border: 1px solid #ffedd5; display: none; }
 .add-btn { width: 100%; background: none; border: 1px dashed var(--border); padding: 8px; border-radius: 8px; color: var(--muted); cursor: pointer; font-size: 11px; font-weight: 700; }
+
+.switch { position: relative; display: inline-block; width: 34px; height: 18px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider-switch { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .4s; border-radius: 34px; }
+.slider-switch:before { position: absolute; content: ""; height: 12px; width: 12px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider-switch { background-color: var(--blue); }
+input:checked + .slider-switch:before { transform: translateX(16px); }
+
+.distribution-bar { display: flex; height: 12px; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin-top: 10px; }
+.bar-segment { height: 100%; transition: width 0.3s ease; border-right: 1px solid rgba(255,255,255,0.2); cursor: help; } /* Cursor añadido */
+
+.channel-row { display: grid; grid-template-columns: 1fr 60px 70px 25px; gap: 8px; align-items: center; margin-bottom: 6px; }
+.channel-row input { width: 100%; padding: 8px 6px; border: 1px solid var(--border); border-radius: 6px; font-weight: 700; font-size: 12px; text-align: right; outline: none; box-sizing: border-box; }
+.chan-name { text-align: right !important; }
+
+/* INICIO DEL AÑADIDO: CSS PARA IMPRESIÓN PDF */
+@media print {
+    body { padding: 0; background: #fff; color: #000; }
+    .container { max-width: 100%; margin: 0; }
+    .handshake-credit, .action-footer, .add-btn, .helper, .helper-mini, .switch, .slider-switch, .dynamic-row button { display: none !important; }
+    .layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .card { padding: 12px; margin-bottom: 12px; box-shadow: none; border: 1px solid #e2e8f0; break-inside: avoid; }
+    .minimal-header { margin-bottom: 20px; }
+    input { border: none !important; padding: 0 !important; background: transparent !important; color: #000 !important; }
+    .input-group, .input-wrapper, .text-input { border: none !important; padding: 0 !important; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .range-input::-webkit-slider-thumb { display: none !important; }
+    .range-container { margin: 25px 0 10px 0; }
+    #pdf-qr-section { grid-column: span 3; text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e2e8f0; break-inside: avoid; }
+}
+/* FIN DEL AÑADIDO */

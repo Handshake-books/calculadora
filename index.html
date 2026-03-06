@@ -144,6 +144,44 @@
                     </div>
                 </section>
 
+                <section class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                        <div>
+                            <h3 style="margin:0;">Canales de Venta</h3>
+                            <div class="helper-mini" style="margin-top:4px;">¿Tus ventas son 100% directas (sin comisiones)?</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="label" style="font-size: 9px;">NO</span>
+                            <label class="switch">
+                                <input type="checkbox" id="modoPro" onchange="togglePro()">
+                                <span class="slider-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="proContent" style="display: none; border-top: 1px solid var(--border); margin-top: 10px; padding-top: 15px;">
+                        <div class="helper">Distribuye tu stock en distintos canales de venta, ajusta el descuento de cada canal y consigue una proyección mas realista. </div>
+                        
+                        <div class="distribution-bar" id="distBar"></div>
+                        <div class="slider-legend" style="margin-top: 8px; margin-bottom: 20px; display: flex; justify-content: space-between;">
+                            <span id="label_principal" style="color: var(--blue); font-size: 10px; font-weight: 800;">● Directa</span>
+                            <span id="label_otros" style="color: var(--muted); font-size: 10px; font-weight: 800;">● Con comisión</span>
+                        </div>
+
+                        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 15px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span class="label" style="margin:0">Ventas Directas (Sin dto.)</span>
+                                <span id="unidades_principal" style="font-weight: 800; color: var(--blue);">0 uds.</span>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 60px 70px 25px; gap: 8px; margin-bottom: 8px; padding: 0 5px; font-size: 9px; font-weight: 800; color: var(--muted); text-transform: uppercase;">
+                            <span>Canal</span><span>% Dto.</span><span>Ventas</span><span></span>
+                        </div>
+                        <div id="channelList"></div>
+                        <button class="add-btn" onclick="addChannel()">+ añadir canal con comisión</button>
+                    </div>
+                </section>
                 <section class="card simulator-section">
                     <h3>Simulador de ventas</h3>
                     <div class="helper">Desliza el marcador para visualizar cómo cambia la rentabilidad del proyecto según el volumen de ejemplares vendidos.</div>
@@ -185,7 +223,7 @@
 
                 <div class="action-footer">
                     <button class="btn btn-dark" onclick="shareProject()">🔗 Copiar Enlace</button>
-                    <button class="btn btn-dark" onclick="window.print()">📄 descargar PDF</button>
+                    <button class="btn btn-dark" onclick="exportPDF()">📄 descargar PDF</button>
                     <button class="btn btn-reset" onclick="resetCalc()">🔄 Reset</button>
                 </div>
             </div>
