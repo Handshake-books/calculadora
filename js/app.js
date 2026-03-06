@@ -325,7 +325,7 @@ function resetCalc() {
 window.onload = () => {
     const loaded = loadFromUrl();
     if(!loaded) {
-        addRow("costList", "Imprenta", 3000);
+        addRow("costList", "Ej. Imprenta", 3000);
         // ELIMINADO: addRow("stockList", "Archivo autor/a", 20); a petición tuya
         addRow("investList", "Editorial", 100);
         addRow("incomeList", "Editorial", 80);

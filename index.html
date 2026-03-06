@@ -14,7 +14,7 @@
     <div class="container">
         <header class="minimal-header">
             <input id="titulo_proyecto" class="title-input" placeholder="Nombre del proyecto editorial...">
-            <div class="subtitle">Simulador editorial de viabilidad económica.</div>
+            <div class="subtitle">Toca los números, añade tus costes y descubre si tu próximo libro es viable.</div>
         </header>
 
         <div class="layout">
@@ -35,10 +35,10 @@
 
                 <section class="card">
                     <h3>Tirada vs. Stock</h3>
-                    <div class="helper">Define cuántos libros se imprimen y cuántos no se venden.</div>
+                    <div class="helper">Define cuántos libros se imprimen y quedan fuera de venta.</div>
                     <div class="input-group">
                         <input id="tirada_total" class="calc" type="number" value="600">
-                        <span class="unit">uds. totales</span>
+                        <span class="unit">Tirada total </span>
                     </div>
                     
                     <div class="stock-deduction-box">
@@ -146,7 +146,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
                         <div>
                             <h3 style="margin:0;">¿Venderás en librerías o tiendas?</h3>
-                            <div class="helper-mini" style="margin-top:4px;">Activa esta opción si tienes canales con comisión o distribución.</div>
+                            <div class="helper-mini" style="margin-top:4px;">Activa esta opción si tienes canales de venta con comisión.</div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span class="label" style="font-size: 9px;">SÍ</span>
@@ -214,7 +214,6 @@
                         <div class="res-total">
                             <span class="label">Resultado Final del Proyecto</span>
                             <span id="beneficio_sin_iva" class="val-final">0,00 €</span>
-                            <div class="helper-mini" style="margin-top:8px">¡Cuidado! Estas estimaciones no tienen en cuenta descuentos a librerías, distribuidoras o comisiones de tiendas online.</div>
                         </div>
                     </div>
                 </section>
