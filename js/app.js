@@ -1,6 +1,5 @@
 /**
- * Lógica de la Calculadora Editorial Premium
- * Handshake • 2026
+ * Lógica de la Calculadora Editorial Premium • Handshake 2026
  */
 
 const euro = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' });
@@ -9,22 +8,21 @@ const number = new Intl.NumberFormat('es-ES');
 function formatEuro(v) { return euro.format(v); }
 function formatUnits(v) { return number.format(v) + " uds."; }
 
-/**
- * Añade filas dinámicas respetando los placeholders originales
- */
 function addRow(container, label, value) {
     let div = document.createElement("div");
-    div.className = "input-row";
-    div.style = "display:grid; grid-template-columns: 1fr 80px 25px; gap:8px; margin-bottom:8px;";
-    
+    div.className = "dynamic-row";
     let placeholder = "Concepto...";
-    if (container.includes("invest")) placeholder = "Socio/Inversor...";
-    if (container.includes("income")) placeholder = "Socio/Autor...";
-    if (container.includes("stock")) placeholder = "Destino...";
+    let unit = "€";
+    if (container.includes("stock")) { placeholder = "Destino..."; unit = "uds."; }
+    else if (container.includes("invest")) { placeholder = "Inversor..."; unit = "%"; }
+    else if (container.includes("income")) { placeholder = "Beneficiario..."; unit = "%"; }
 
     div.innerHTML = `
         <input class="text-input" value="${label}" placeholder="${placeholder}" style="padding:8px; border-radius:6px; border:1px solid #e2e8f0; font-size:13px; outline:none;">
-        <input type="number" class="calc" value="${value}" style="padding:8px; border-radius:6px; border:1px solid #e2e8f0; font-size:13px; font-weight:700; outline:none;">
+        <div class="input-wrapper-list">
+            <input type="number" class="calc" value="${value}">
+            <span class="inline-unit">${unit}</span>
+        </div>
         <button onclick="this.parentNode.remove();calc()" style="background:none; border:none; color:#cbd5e1; cursor:pointer; font-size:16px;">✕</button>
     `;
     document.getElementById(container).appendChild(div);
@@ -36,70 +34,65 @@ function addStock() { addRow("stockList", "", 0); }
 function addInvestor() { addRow("investList", "", 0); }
 function addIncome() { addRow("incomeList", "", 0); }
 
-/**
- * Función central de cálculos
- */
-function calc() {
-    // 1. Costes
+function calc(event) {
     let totalInv = 0;
     document.querySelectorAll("#costList input[type=number]").forEach(i => totalInv += parseFloat(i.value) || 0);
     
-    // 2. Precios e IVA
     let pvp = parseFloat(document.getElementById("pvp").value) || 0;
     let ivaPct = parseFloat(document.getElementById("iva_pct").value) || 0;
     let base = pvp / (1 + ivaPct/100);
     let cuotaIva = pvp - base;
     
-    // 3. Tirada y Stock real
     let tirada = parseFloat(document.getElementById("tirada_total").value) || 0;
     let stockFuera = 0;
     document.querySelectorAll("#stockList input[type=number]").forEach(i => stockFuera += parseFloat(i.value) || 0);
     let vMax = Math.max(0, tirada - stockFuera);
     
-    // 4. Métricas Clave
     let costeU = vMax > 0 ? totalInv / vMax : 0;
     let marginU = base - costeU;
-    let eq = marginU > 0 ? Math.ceil(totalInv / marginU) : 0;
+    
+    // Unificación nomenclatura: Punto de equilibrio real
+    let eq = base > 0 ? Math.ceil(totalInv / base) : 0;
 
-    // 5. Lógica del Slider
     const slider = document.getElementById("ventasSlider");
     if (slider.max != vMax) { 
         slider.max = vMax; 
-        if (parseFloat(slider.value) > vMax) slider.value = vMax;
+        if (!event || event.target.id !== "ventasSlider") slider.value = vMax;
     }
     let vSim = parseFloat(slider.value);
 
-    // --- RENDERIZADO EN PANTALLA ---
-
-    // Columna 1
+    // Actualización UI
     document.getElementById("total_inversion").innerText = formatEuro(totalInv);
     document.getElementById("tirada_venta").innerText = formatUnits(vMax);
     document.getElementById("base_calc").innerText = formatEuro(base);
     document.getElementById("iva_calc").innerText = formatEuro(cuotaIva);
     
-    // Fichas Resultados (Columna 3 superior)
+    document.getElementById("resumen_pvp").innerText = formatEuro(pvp);
     document.getElementById("coste_unitario").innerText = formatEuro(costeU);
     document.getElementById("beneficio").innerText = formatEuro(marginU);
     document.getElementById("equilibrio").innerText = formatUnits(eq);
     
-    // Slider Visual
+    // Lógica visual del slider
     let progressPct = vMax > 0 ? (vSim / vMax) * 100 : 0;
     let eqPosPct = vMax > 0 ? (eq / vMax) * 100 : 0;
-    document.getElementById("break_fill").style.width = progressPct + "%";
-    document.getElementById("break_fill").style.background = vSim < eq ? "var(--red)" : "var(--green)";
     
-    const eqMark = document.getElementById("eq_mark");
-    eqMark.style.left = eqPosPct + "%";
-    eqMark.style.display = (eq > 0 && eq <= vMax) ? "block" : "none";
-
-    // Grid del Simulador (con IVA acumulado)
+    document.getElementById("break_fill").style.width = progressPct + "%";
+    
+    // Balance neto simulado
     let totalNetoSim = base * vSim;
+    let balanceFinal = totalNetoSim - totalInv;
+    
+    // Color dinámico: Cambia exactamente al superar el punto de equilibrio
+    document.getElementById("break_fill").style.background = balanceFinal < 0 ? "rgba(239, 68, 68, 0.4)" : "rgba(16, 185, 129, 0.4)";
+    document.getElementById("eq_mark").style.left = eqPosPct + "%";
+    document.getElementById("eq_mark").style.display = (eq > 0 && eq <= vMax) ? "block" : "none";
+
+    // Resultados Simulador
     document.getElementById("ventas_sim_val").innerText = formatUnits(vSim);
     document.getElementById("ingresos_total").innerText = formatEuro(pvp * vSim);
     document.getElementById("iva_total").innerText = formatEuro(cuotaIva * vSim);
     document.getElementById("ingresos_sin_iva").innerText = formatEuro(totalNetoSim);
     
-    let balanceFinal = totalNetoSim - totalInv;
     const resFinalLabel = document.getElementById("beneficio_sin_iva");
     resFinalLabel.innerText = formatEuro(balanceFinal);
     resFinalLabel.style.color = balanceFinal >= 0 ? "var(--green)" : "var(--red)";
@@ -113,9 +106,6 @@ function calc() {
     checkWarnings();
 }
 
-/**
- * Balance por Actores dinámico
- */
 function updateActors(tInv, tNet) {
     let html = "";
     let names = new Set();
@@ -125,10 +115,10 @@ function updateActors(tInv, tNet) {
     
     names.forEach(name => {
         let pInv = 0, pInc = 0;
-        document.querySelectorAll("#investList .input-row").forEach(r => {
+        document.querySelectorAll("#investList .dynamic-row").forEach(r => {
             if (r.querySelector(".text-input").value.trim() === name) pInv += parseFloat(r.querySelectorAll("input")[1].value) || 0;
         });
-        document.querySelectorAll("#incomeList .input-row").forEach(r => {
+        document.querySelectorAll("#incomeList .dynamic-row").forEach(r => {
             if (r.querySelector(".text-input").value.trim() === name) pInc += parseFloat(r.querySelectorAll("input")[1].value) || 0;
         });
         
@@ -162,15 +152,40 @@ function attach() {
 function shareProject() {
     const data = {
         t: document.getElementById("titulo_proyecto").value,
-        c: Array.from(document.querySelectorAll("#costList .input-row")).map(r => [r.querySelector(".text-input").value, r.querySelectorAll("input")[1].value]),
-        s: Array.from(document.querySelectorAll("#stockList .input-row")).map(r => [r.querySelector(".text-input").value, r.querySelectorAll("input")[1].value]),
-        inv: Array.from(document.querySelectorAll("#investList .input-row")).map(r => [r.querySelector(".text-input").value, r.querySelectorAll("input")[1].value]),
-        inc: Array.from(document.querySelectorAll("#incomeList .input-row")).map(r => [r.querySelector(".text-input").value, r.querySelectorAll("input")[1].value]),
+        c: Array.from(document.querySelectorAll("#costList .dynamic-row")).map(r => [r.querySelector(".text-input").value, r.querySelectorAll("input")[1].value]),
+        s: Array.from(document.querySelectorAll("#stockList .dynamic-row")).map(r => [r.querySelector(".text-input").value, r.querySelectorAll("input")[1].value]),
+        inv: Array.from(document.querySelectorAll("#investList .dynamic-row")).map(r => [r.querySelector(".text-input").value, r.querySelectorAll("input")[1].value]),
+        inc: Array.from(document.querySelectorAll("#incomeList .dynamic-row")).map(r => [r.querySelector(".text-input").value, r.querySelectorAll("input")[1].value]),
         tir: document.getElementById("tirada_total").value, pvp: document.getElementById("pvp").value, iva: document.getElementById("iva_pct").value
     };
-    const url = window.location.origin + window.location.pathname + "?p=" + btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+    const json = JSON.stringify(data);
+    const base64 = btoa(unescape(encodeURIComponent(json)));
+    const url = window.location.origin + window.location.pathname + "?p=" + base64;
     navigator.clipboard.writeText(url);
-    alert("Enlace copiado al portapapeles.");
+    alert("Enlace de proyecto copiado.");
+}
+
+function loadFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const p = params.get("p");
+    if (!p) return false;
+    try {
+        const json = decodeURIComponent(escape(atob(p)));
+        const data = JSON.parse(json);
+        document.getElementById("titulo_proyecto").value = data.t || "";
+        document.getElementById("tirada_total").value = data.tir;
+        document.getElementById("pvp").value = data.pvp;
+        document.getElementById("iva_pct").value = data.iva;
+        document.getElementById("costList").innerHTML = "";
+        data.c.forEach(x => addRow("costList", x[0], x[1]));
+        document.getElementById("stockList").innerHTML = "";
+        data.s.forEach(x => addRow("stockList", x[0], x[1]));
+        document.getElementById("investList").innerHTML = "";
+        data.inv.forEach(x => addRow("investList", x[0], x[1]));
+        document.getElementById("incomeList").innerHTML = "";
+        data.inc.forEach(x => addRow("incomeList", x[0], x[1]));
+        return true;
+    } catch(e) { return false; }
 }
 
 function resetCalc() {
@@ -178,16 +193,15 @@ function resetCalc() {
 }
 
 window.onload = () => {
-    // Si la lista está vacía, cargar valores por defecto de la versión online
-    if(!document.getElementById("costList").children.length) {
+    const loaded = loadFromUrl();
+    if(!loaded) {
         addRow("costList", "Imprenta", 3000);
-        addRow("stockList", "Autor/a", 20);
+        addRow("stockList", "Archivo autor/a", 20);
         addRow("investList", "Editorial", 100);
-        addRow("incomeList", "Editorial", 90);
-        addRow("incomeList", "Autoría", 10);
+        addRow("incomeList", "Editorial", 80);
+        addRow("incomeList", "Autor/a", 20);
     }
-    
     document.getElementById("ventasSlider").oninput = calc;
-    calc();
+    calc(null);
     attach();
 };
