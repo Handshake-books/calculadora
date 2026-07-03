@@ -7,81 +7,86 @@
     <link rel="icon" href="icon.png">
 </head>
 <body>
-    <div class="handshake-credit">
+    <div class="lang-toggle" id="langToggle">
+        <button type="button" class="lang-btn active" data-lang="es">ES</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+    </div>
+
+    <div class="handshake-credit" data-i18n-html="credit">
         Una herramienta libre de <a href="https://www.handshake.fun" target="_blank">Handshake</a> desarrollada por Jaime Sebastián • 2026
     </div>
 
     <div class="container">
         <header class="minimal-header">
-            <input id="titulo_proyecto" class="title-input" placeholder="Nombre del proyecto...">
-            <div class="subtitle">Toca los números, añade tus costes y descubre si tu próxima publicación es viable.</div>
+            <input id="titulo_proyecto" class="title-input" placeholder="Nombre del proyecto..." data-i18n-placeholder="titlePlaceholder">
+            <div class="subtitle" data-i18n="subtitle">¿No sabes qué precio ponerle a tu publicación? ¿Quieres publicar pero no arruinarte en el intento? Con esta herramienta podrás hacer un cálculo de presupuesto. Toca los números, añade tus costes y descubre si tu próxima publicación es viable.</div>
         </header>
 
         <div class="layout">
             <div class="column">
-                <div class="column-title">1. Producción y Precio</div>
-                
+                <div class="column-title" data-i18n="col1">1. Producción y Precio</div>
+
                 <section class="card">
-                    <h3>Costes de producción</h3>
-                    <div class="helper">Incluye aquí todo lo que hace que tu libro sea real: desde el papel y la impresión hasta el packaging de los envíos o la corrección de textos.</div>
+                    <h3 data-i18n="costsTitle">Costes de producción</h3>
+                    <div class="helper" data-i18n="costsHelper">Incluye aquí todo lo que hace que tu libro sea real: desde el papel y la impresión hasta el packaging de los envíos o la corrección de textos.</div>
                     <div id="costList"></div>
-                    <button class="add-btn" onclick="addCost()">+ añadir concepto</button>
+                    <button class="add-btn" onclick="addCost()" data-i18n="addConcept">+ añadir concepto</button>
                     <div class="divider"></div>
                     <div class="metric-row-inline">
-                        <span class="label">Inversión inicial total</span>
+                        <span class="label" data-i18n="totalInvestment">Inversión inicial total</span>
                         <span id="total_inversion" class="value-main val-blue">0,00 €</span>
                     </div>
                 </section>
 
                 <section class="card">
-                    <h3>Tirada vs. Stock</h3>
-                    <div class="helper">Define cuántos libros se imprimen y quedan fuera de venta.</div>
+                    <h3 data-i18n="stockTitle">Tirada vs. Stock</h3>
+                    <div class="helper" data-i18n="stockHelper">Define cuántos libros se imprimen y quedan fuera de venta.</div>
                     <div class="input-group">
                         <input id="tirada_total" class="calc" type="number" value="600">
-                        <span class="unit">Tirada total </span>
+                        <span class="unit" data-i18n="printRunUnit">Tirada total </span>
                     </div>
-                    
+
                     <div class="stock-deduction-box">
-                        <div class="helper"><b>Stock fuera de venta:</b> No todos los libros se venden. Reserva ejemplares para usar de muestra, depósito legal o para tu propia estantería.</div>
+                        <div class="helper" data-i18n-html="stockBoxHelper"><b>Stock fuera de venta:</b> No todos los libros se venden. Reserva ejemplares para usar de muestra, depósito legal o para tu propia estantería.</div>
                         <div id="stockList"></div>
-                        <button class="add-btn" onclick="addStock()">+ añadir stock fuera de venta</button>
+                        <button class="add-btn" onclick="addStock()" data-i18n="addStock">+ añadir stock fuera de venta</button>
                     </div>
 
                     <div class="divider"></div>
                     <div class="metric-row-inline">
-                        <span class="label">Stock real a la venta</span>
+                        <span class="label" data-i18n="actualStock">Stock real a la venta</span>
                         <span id="tirada_venta" class="value-main val-blue">600 uds.</span>
                     </div>
                 </section>
 
                 <section class="card">
-                    <h3>Precio de venta</h3>
+                    <h3 data-i18n="priceTitle">Precio de venta</h3>
                     <div class="input-group">
                         <input id="pvp" class="calc" type="number" value="25">
-                        <span class="unit">€ PVP</span>
+                        <span class="unit" data-i18n="pvpUnit">€ PVP</span>
                     </div>
-                    
+
                     <div class="price-grid">
                         <div class="price-sub-item">
-                            <span class="label">Base (Neto)</span>
+                            <span class="label" data-i18n="baseLabel">Base (Neto)</span>
                             <b id="base_calc">0,00 €</b>
                         </div>
                         <div class="price-sub-item">
-                            <span class="label">IVA</span>
+                            <span class="label" data-i18n="ivaLabel">IVA</span>
                             <div class="input-wrapper mini">
                                 <input id="iva_pct" class="calc" type="number" value="4">
                                 <span class="inline-unit">%</span>
                             </div>
                         </div>
                         <div class="price-sub-item">
-                            <span class="label">Cuota IVA</span>
+                            <span class="label" data-i18n="ivaAmountLabel">Cuota IVA</span>
                             <b id="iva_calc">0,00 €</b>
                         </div>
                     </div>
                     <div class="divider"></div>
-                    
-                    <h4 class="mini-section-title">¿Qué precio le pongo?</h4>
-                    <div class="helper">Estas son referencias habituales del mercado, se multiplica el coste unitario para asegurar márgenes saludables. Elige la que mejor encaje con tu lector.</div>
+
+                    <h4 class="mini-section-title" data-i18n="priceQuestion">¿Qué precio le pongo?</h4>
+                    <div class="helper" data-i18n="priceHelper">Estas son referencias habituales del mercado, se multiplica el coste unitario para asegurar márgenes saludables. Elige la que mejor encaje con tu lector.</div>
                     <div class="suggestions-container">
                         <div class="suggest-item"><span>×3</span><b id="p3">0,00 €</b></div>
                         <div class="suggest-item"><span>×4</span><b id="p4">0,00 €</b></div>
@@ -91,53 +96,53 @@
             </div>
 
             <div class="column">
-                <div class="column-title">2. Negociación</div>
+                <div class="column-title" data-i18n="col2">2. Negociación</div>
                 <section class="card">
-                    <h3>Inversión</h3>
-                    <div class="helper">¿Quién pone el dinero? Puede ser la editorial, un co-editor, una beca o incluso un crowdfunding.</div>
+                    <h3 data-i18n="investTitle">Inversión</h3>
+                    <div class="helper" data-i18n="investHelper">¿Quién pone el dinero? Puede ser la editorial, un co-editor, una beca o incluso un crowdfunding.</div>
                     <div id="investList"></div>
-                    <button class="add-btn" onclick="addInvestor()">+ añadir inversor</button>
-                    <div id="invWarning" class="warning">⚠️ La inversión debe sumar 100%</div>
+                    <button class="add-btn" onclick="addInvestor()" data-i18n="addInvestor">+ añadir inversor</button>
+                    <div id="invWarning" class="warning" data-i18n="investWarning">⚠️ La inversión debe sumar 100%</div>
                 </section>
 
                 <section class="card">
-                    <h3>Reparto de ingresos</h3>
-                    <div class="helper">Define cómo se reparte el pastel de las ventas netas. ¿Qué porcentaje se lleva el autor/a tras recuperar la inversión?</div>
+                    <h3 data-i18n="incomeTitle">Reparto de ingresos</h3>
+                    <div class="helper" data-i18n="incomeHelper">Define cómo se reparte el pastel de las ventas netas. ¿Qué porcentaje se lleva el autor/a tras recuperar la inversión?</div>
                     <div id="incomeList"></div>
-                    <button class="add-btn" onclick="addIncome()">+ añadir beneficiario</button>
-                    <div id="incWarning" class="warning">⚠️ El reparto debe sumar 100%</div>
+                    <button class="add-btn" onclick="addIncome()" data-i18n="addBeneficiary">+ añadir beneficiario</button>
+                    <div id="incWarning" class="warning" data-i18n="incomeWarning">⚠️ El reparto debe sumar 100%</div>
                 </section>
 
                 <div class="section-plain">
-                    <h3 class="small-title">Reparto de beneficios</h3>
+                    <h3 class="small-title" data-i18n="profitSplitTitle">Reparto de beneficios</h3>
                     <div id="actorCharts"></div>
                 </div>
             </div>
 
             <div class="column">
-                <div class="column-title">3. Resultados</div>
-                
+                <div class="column-title" data-i18n="col3">3. Resultados</div>
+
                 <section class="card-nested-container">
                     <div class="nested-grid">
                         <div class="nested-card">
-                            <span class="label">P.V.P.</span>
+                            <span class="label" data-i18n="pvpLabel">P.V.P.</span>
                             <span id="resumen_pvp" class="val-blue">0,00 €</span>
-                            <div class="helper-mini">Precio de venta al público (IVA inc).</div>
+                            <div class="helper-mini" data-i18n="pvpHelperMini">Precio de venta al público (IVA inc).</div>
                         </div>
                         <div class="nested-card">
-                            <span class="label">Coste / ud.</span>
+                            <span class="label" data-i18n="costPerUnitLabel">Coste / ud.</span>
                             <span id="coste_unitario" class="val-blue">0,00 €</span>
-                            <div class="helper-mini">= Inversión inicial / Stock a la venta.</div>
+                            <div class="helper-mini" data-i18n="costPerUnitHelperMini">= Inversión inicial / Stock a la venta.</div>
                         </div>
                         <div class="nested-card">
-                            <span class="label">Margen medio / ud.</span>
+                            <span class="label" data-i18n="marginLabel">Margen medio / ud.</span>
                             <span id="beneficio" class="val-blue">0,00 €</span>
-                            <div class="helper-mini">Beneficio por ejemplar vendido. Varía según el coste/ud. y el descuento que apliques a cada canal.</div>
+                            <div class="helper-mini" data-i18n="marginHelperMini">Beneficio por ejemplar vendido. Varía según el coste/ud. y el descuento que apliques a cada canal.</div>
                         </div>
                         <div class="nested-card">
-                            <span class="label">Punto de equilibrio</span>
+                            <span class="label" data-i18n="breakEvenLabel">Punto de equilibrio</span>
                             <span id="equilibrio" class="val-blue">0 uds.</span>
-                            <div class="helper-mini">Esta es tu 'cifra mágica'. A partir de aquí, el proyecto deja de ser una inversión y empieza a generar beneficios.</div>
+                            <div class="helper-mini" data-i18n="breakEvenHelperMini">Esta es tu 'cifra mágica'. A partir de aquí, el proyecto deja de ser una inversión y empieza a generar beneficios.</div>
                         </div>
                     </div>
                 </section>
@@ -145,11 +150,11 @@
                 <section class="card">
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
                         <div>
-                            <h3 style="margin:0;">¿Vas a vender a través de terceros?</h3>
-                            <div class="helper-mini" style="margin-top:4px;">Si vas a vender a través de otros canales, activa esta opción para ver cómo afectan las comisiones a tu beneficio real.</div>
+                            <h3 style="margin:0;" data-i18n="thirdPartyQuestion">¿Vas a vender a través de terceros?</h3>
+                            <div class="helper-mini" style="margin-top:4px;" data-i18n="thirdPartyHelperMini">Si vas a vender a través de otros canales, activa esta opción para ver cómo afectan las comisiones a tu beneficio real.</div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 8px;">
-                            <span class="label" style="font-size: 9px;">SÍ</span>
+                            <span class="label" style="font-size: 9px;" data-i18n="yes">SÍ</span>
                             <label class="switch">
                                 <input type="checkbox" id="modoPro" onchange="togglePro()">
                                 <span class="slider-switch"></span>
@@ -158,8 +163,8 @@
                     </div>
 
                     <div id="proContent" style="display: none; border-top: 1px solid var(--border); margin-top: 10px; padding-top: 15px;">
-                        <div class="helper">Reparte tu stock en distintos canales de venta, ajusta el descuento de cada canal y consigue una proyección más realista.</div>
-                        
+                        <div class="helper" data-i18n="channelsHelper">Reparte tu stock en distintos canales de venta, ajusta el descuento de cada canal y consigue una proyección más realista.</div>
+
                         <div class="distribution-bar" id="distBar"></div>
                         <div class="slider-legend" style="margin-top: 8px; margin-bottom: 20px; display: flex; justify-content: space-between;">
                             <span id="label_principal" style="color: var(--blue); font-size: 10px; font-weight: 800;">● Directa</span>
@@ -168,62 +173,62 @@
 
                         <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 15px;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span class="label" style="margin:0">Ventas Directas (Sin descuento)</span>
+                                <span class="label" style="margin:0" data-i18n="directSales">Ventas Directas (Sin descuento)</span>
                                 <span id="unidades_principal" style="font-weight: 800; color: var(--blue);">0 uds.</span>
                             </div>
                         </div>
 
                         <div style="display: grid; grid-template-columns: 1fr 60px 70px 25px; gap: 8px; margin-bottom: 8px; padding: 0 5px; font-size: 9px; font-weight: 800; color: var(--muted); text-transform: uppercase;">
-                            <span>Canal de venta</span><span>% Dto.</span><span>Ventas (uds.)</span><span></span>
+                            <span data-i18n="channelHeader">Canal de venta</span><span data-i18n="discountHeader">% Dto.</span><span data-i18n="salesHeader">Ventas (uds.)</span><span></span>
                         </div>
                         <div id="channelList"></div>
-                        <button class="add-btn" onclick="addChannel()">+ añadir canal con dto.</button>
+                        <button class="add-btn" onclick="addChannel()" data-i18n="addChannel">+ añadir canal con dto.</button>
                     </div>
                 </section>
 
                 <section class="card simulator-section">
-                    <h3>Simulador de ventas</h3>
-                    <div class="helper">Juega con el marcador negro: ¿qué pasa si solo vendes la mitad? ¿Y si agotas la edición?</div>
-                    
+                    <h3 data-i18n="simulatorTitle">Simulador de ventas</h3>
+                    <div class="helper" data-i18n="simulatorHelper">Juega con el marcador azul: ¿qué pasa si solo vendes la mitad? ¿Y si agotas la edición?</div>
+
                     <div class="range-container">
                         <div class="range-track" id="range_track_bg">
                             <div id="break_fill" class="range-fill"></div>
-                            <div id="eq_mark" class="range-mark"><span class="mark-label">PUNTO DE EQUILIBRIO</span></div>
+                            <div id="eq_mark" class="range-mark"><span class="mark-label" data-i18n="breakEvenMark">PUNTO DE EQUILIBRIO</span></div>
                         </div>
                         <input type="range" id="ventasSlider" class="range-input" min="0" max="100" value="100">
                     </div>
-                    <div class="slider-legend"><span>0 ventas</span><span>Sold out</span></div>
+                    <div class="slider-legend"><span data-i18n="zeroSales">0 ventas</span><span data-i18n="soldOut">Sold out</span></div>
 
                     <div class="results-grid">
                         <div class="res-item blue-box">
-                            <span class="label">Ventas simuladas</span>
+                            <span class="label" data-i18n="simulatedSales">Ventas simuladas</span>
                             <b id="ventas_sim_val">0 uds.</b>
                         </div>
                         <div class="res-item">
-                            <span class="label">Total Bruto</span>
+                            <span class="label" data-i18n="grossTotal">Total Bruto</span>
                             <b id="ingresos_total">0,00 €</b>
                         </div>
                         <div class="res-item">
-                            <span class="label">IVA Acumulado</span>
+                            <span class="label" data-i18n="accumulatedVat">IVA Acumulado</span>
                             <b id="iva_total">0,00 €</b>
                         </div>
                         <div class="res-item">
-                            <span class="label">Base Neta</span>
+                            <span class="label" data-i18n="netBase">Base Neta</span>
                             <b id="ingresos_sin_iva">0,00 €</b>
                         </div>
                         <div class="res-total">
-                            <span class="label">Resultado Final</span>
+                            <span class="label" data-i18n="finalResult">Resultado Final</span>
                             <span id="beneficio_sin_iva" class="val-final">0,00 €</span>
-                              <div class="helper">Esta es la proyección de beneficios. Tómalo como una guía, ¡la realidad editorial siempre tiene sus giros de guion!</div>
+                              <div class="helper" data-i18n="finalHelper">Esta es la proyección de beneficios. Tómalo como una guía, ¡la realidad editorial siempre tiene sus giros de guion!</div>
 
                         </div>
                     </div>
                 </section>
 
                 <div class="action-footer">
-                    <button class="btn btn-dark" onclick="shareProject()">🔗 Guardar y Compartir</button>
-                    <button class="btn btn-dark" onclick="exportPDF()">📄 Generar informe de viabilidad</button>
-                    <button class="btn btn-reset" onclick="resetCalc()">🔄 Empezar de cero</button>
+                    <button class="btn btn-dark" onclick="shareProject()" data-i18n="shareBtn">🔗 Guardar y Compartir</button>
+                    <button class="btn btn-dark" onclick="exportPDF()" data-i18n="pdfBtn">📄 Generar informe de viabilidad</button>
+                    <button class="btn btn-reset" onclick="resetCalc()" data-i18n="resetBtn">🔄 Empezar de cero</button>
                 </div>
             </div>
         </div>
